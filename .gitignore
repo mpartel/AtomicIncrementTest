@@ -1,0 +1,4 @@
+/build
+/native/headers
+/native/libatomicincrementtest.so
+/nbproject/private
