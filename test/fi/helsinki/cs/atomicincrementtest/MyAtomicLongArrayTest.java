@@ -25,4 +25,40 @@ public class MyAtomicLongArrayTest {
         
         assertEquals(numThreads * numIncrements, array.get(arrayIndex));
     }
+    
+    @Test
+    public void testLargeValues() {
+        MyAtomicLongArray array = new MyAtomicLongArray(10);
+        array.set(5, (0x100000000l) - 2);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        assertEquals((0x100000000l) + 3, array.get(5));
+        
+        for (int i = 0; i < array.size(); ++i) {
+            if (i != 5) {
+                assertEquals(0, array.get(i));
+            }
+        }
+    }
+    
+    @Test
+    public void testNegativeValues() {
+        MyAtomicLongArray array = new MyAtomicLongArray(10);
+        array.set(5, -3);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        array.inc(5);
+        assertEquals(2, array.get(5));
+        
+        for (int i = 0; i < array.size(); ++i) {
+            if (i != 5) {
+                assertEquals(0, array.get(i));
+            }
+        }
+    }
 }

@@ -40,7 +40,15 @@ public class MyAtomicLongArray {
         }
         incAt(arrayPtr + index * LONG_BYTES);
     }
-    private native void incAt(long index);
+    private native void incAt(long addr);
+    
+    public final void set(int index, long value) {
+        if (index < 0 || index >= size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+        setAt(arrayPtr + index * LONG_BYTES, value);
+    }
+    private native void setAt(long addr, long value);
 
     @Override
     protected void finalize() throws Throwable {

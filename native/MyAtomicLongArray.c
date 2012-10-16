@@ -20,8 +20,15 @@ JNIEXPORT void JNICALL Java_fi_helsinki_cs_atomicincrementtest_MyAtomicLongArray
 {
     jlong* ptr = (jlong*)addr;
     __asm__ __volatile__(
-        "lock; incl (%0)\n"
+        "lock; incq (%0)\n"
         :
         : "r"(ptr)
     );
+}
+
+JNIEXPORT void JNICALL Java_fi_helsinki_cs_atomicincrementtest_MyAtomicLongArray_setAt
+  (JNIEnv *env, jobject obj, jlong addr, jlong value)
+{
+    volatile jlong *ptr = (volatile jlong*)addr;
+    *ptr = value;
 }
