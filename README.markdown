@@ -9,7 +9,7 @@ Modify build.xml if you don't have a JVM at `/usr/lib/jvm/java-1.6.0-openjdk-amd
 
 ## Results ##
 
-The custom implementation is consistently 4-6 times faster with 4 threads doing 1 million increments each. The JIT is, I believe, properly warmed up for both.
+The custom implementation is consistently 4-6 times faster with 4 threads doing 1 million increments each. The JIT is, I believe, properly warmed up for both. Both implementations are (unsurprisingly) hundreds of times slower in this test than a non-atomic increment on a `long[]`.
 
 There is a (I believe minor) caveat: the benchmark currently only tests arrays of size 1.
 
