@@ -2,13 +2,13 @@ package fi.helsinki.cs.atomicincrementtest;
 
 import java.math.BigInteger;
 
-public class MultiRunBenchmark implements Benchmark {
+public class RepeatedBenchmark implements Benchmark {
     private final Benchmark task;
     private final int warmupCycles;
     private final int benchmarkCycles;
     private long result;
 
-    public MultiRunBenchmark(Benchmark task, int warmupCycles, int benchmarkCycles) {
+    public RepeatedBenchmark(Benchmark task, int warmupCycles, int benchmarkCycles) {
         this.task = task;
         this.warmupCycles = warmupCycles;
         this.benchmarkCycles = benchmarkCycles;
