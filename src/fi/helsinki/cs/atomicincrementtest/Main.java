@@ -20,6 +20,9 @@ public class Main {
         long[] unsafeArray = new long[1];
         Runnable unsafeInc = new UnsafeIncrementer(unsafeArray, 0, numIncrements);
         Benchmark unsafeBenchmark = makeBenchmark(unsafeInc);
+
+        ThreadLocalIncrementer threadLocalInc = new ThreadLocalIncrementer(0, numIncrements);
+        Benchmark threadLocalBenchmark = makeBenchmark(threadLocalInc);
         
         System.out.println("Working...");
         myBenchmark.run();
@@ -35,11 +38,20 @@ public class Main {
         unsafeBenchmark.run();
         long unsafeResult = unsafeBenchmark.getResult();
         System.out.println("Non-atomic long[]: " + unsafeResult);
+
+        System.out.println("Working...");
+        threadLocalBenchmark.run();
+        long threadLocalResult = threadLocalBenchmark.getResult();
+        System.out.println("Thread-local long[]: " + threadLocalResult);
         
         System.out.println();
         System.out.printf("MyAtomicLongArray took %.2f%% of the time that AtomicLongArray took.\n", percentage(myResult, defResult));
-        System.out.printf("Non-atomic long[] array took %.2f%% of the time that MyAtomicLongArray took.\n", percentage(unsafeResult, myResult));
-        System.out.printf("Non-atomic long[] array took %.2f%% of the time that AtomicLongArray took.\n", percentage(unsafeResult, defResult));
+        System.out.printf("MyAtomicLongArray took %.2f%% of the time that non-atomic long[] array took.\n", percentage(myResult, unsafeResult));
+        System.out.printf("AtomicLongArray took %.2f%% of the time that non-atomic long[] array took.\n", percentage(defResult, unsafeResult));
+
+        System.out.printf("Thread-local long[] array took %.2f%% of the time that MyAtomicLongArray took.\n", percentage(threadLocalResult, myResult));
+        System.out.printf("Thread-local long[] array took %.2f%% of the time that AtomicLongArray took.\n", percentage(threadLocalResult, defResult));
+        System.out.printf("Thread-local long[] array took %.2f%% of the time that non-atomic long[] took.\n", percentage(threadLocalResult, unsafeResult));
     }
     
     private static Benchmark makeBenchmark(Runnable task) {

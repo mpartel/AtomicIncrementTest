@@ -1,17 +1,21 @@
-Benchmarks atomic increment on Java's [AtomicLongArray](http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/atomic/AtomicLongArray.html) against a custom implementation.
+Naively benchmarks atomic increment on Java's [AtomicLongArray](http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/atomic/AtomicLongArray.html) against a custom implementation.
 
 ## Running ##
 
     ant run
 
 Currently only works on Linux/amd64.
-Modify build.xml if you don't have a JVM at `/usr/lib/jvm/java-1.6.0-openjdk-amd64`.
+Modify build.xml if you don't have a JVM at `/usr/lib/jvm/java-7-openjdk-amd64`.
 
 ## Results ##
 
 The custom implementation is consistently 4-6 times faster with 4 threads doing 1 million increments each. The JIT is, I believe, properly warmed up for both. Both implementations are (unsurprisingly) hundreds of times slower in this test than a non-atomic increment on a `long[]`.
 
-There is a (I believe minor) caveat: the benchmark currently only tests arrays of size 1.
+Caveat: the benchmark currently only tests arrays of size 1. This probably does not matter.
+
+## About thread-locals ##
+
+Repeatedly reading a thread-local `long[]` and incrementing that was much faster than either form of atomic incrementing, but about 30 times slower than just incrementing a long[].
 
 ## Theory ##
 

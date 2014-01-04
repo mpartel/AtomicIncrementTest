@@ -85,7 +85,7 @@
             <arg value="-Wl,-soname,libatomicincrementtest.so"/>
             <arg value="-fPIC"/>
             <arg value="-Iheaders"/>
-            <arg value="-I/usr/lib/jvm/java-1.6.0-openjdk-amd64/include"/>
+            <arg value="-I/usr/lib/jvm/java-7-openjdk-amd64/include"/>
             <arg value="MyAtomicLongArray.c"/>
         </exec>
     </target>
